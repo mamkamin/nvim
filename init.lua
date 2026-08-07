@@ -69,17 +69,6 @@ vim.api.nvim_create_user_command('GitBlameLine', function()
 	print(vim.system({ 'git', 'blame', '-L', line_number .. ',+1', filename }):wait().stdout)
 end, { desc = 'Print the git blame for the current line' })
 
--- LSP
---
-local function enable_lsp()
-	local lsp_names = {
-		'lua_ls'
-	}
-
-	for _, lsp in ipairs(lsp_names) do
-		vim.lsp.enable(lsp)
-	end
-end
 
 -- PLUGINS
 --
@@ -93,6 +82,7 @@ vim.cmd('packadd! nohlsearch')
 vim.pack.add({
 	-- Mason
 	'https://github.com/mason-org/mason.nvim',
+	'https://github.com/mason-org/mason-lspconfig.nvim',
 	-- Quickstart configs for LSP
 	'https://github.com/neovim/nvim-lspconfig',
 	-- Fuzzy picker
@@ -107,8 +97,6 @@ vim.pack.add({
 	'https://github.com/folke/lazydev.nvim'
 })
 
-enable_lsp()
-
 require('mason').setup {}
 local fzf = require('fzf-lua')
 require('mini.completion').setup {}
@@ -121,6 +109,11 @@ require('lazydev').setup {
 		{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
 	},
 }
+require("mason-lspconfig").setup({
+	ensure_installed = {
+		"lua_ls"
+	},
+})
 
 vim.cmd.colorscheme('catppuccin')
 
