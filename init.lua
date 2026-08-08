@@ -1,7 +1,7 @@
 -- Set <space> as the leader key
 -- See `:h mapleader`
 -- NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
+vim.g.mapleader = " "
 
 -- OPTIONS
 --
@@ -17,14 +17,14 @@ vim.o.number = true -- Show line numbers in a column.
 -- Affects the 'number' option above, see `:h number_relativenumber`.
 vim.o.relativenumber = true
 
-vim.o.winborder = 'rounded'
+vim.o.winborder = "rounded"
 
 -- Sync clipboard between OS and Neovim. Schedule the setting after `UIEnter` because it can
 -- increase startup-time. Remove this option if you want your OS clipboard to remain independent.
 -- See `:h 'clipboard'`
-vim.api.nvim_create_autocmd('UIEnter', {
+vim.api.nvim_create_autocmd("UIEnter", {
 	callback = function()
-		vim.o.clipboard = 'unnamedplus'
+		vim.o.clipboard = "unnamedplus"
 	end,
 })
 
@@ -45,8 +45,8 @@ vim.o.confirm = true
 -- See `:h vim.keymap.set()`, `:h mapping`, `:h keycodes`
 
 -- Use <Esc> to exit terminal mode
-vim.keymap.set('t', '<Esc>', '<C-\\><C-n>')
-vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 -- AUTOCOMMANDS (EVENT HANDLERS)
 --
@@ -54,8 +54,8 @@ vim.keymap.set('n', '<leader>pv', vim.cmd.Ex)
 
 -- Highlight when yanking (copying) text.
 -- Try it with `yap` in normal mode. See `:h vim.hl.on_yank()`
-vim.api.nvim_create_autocmd('TextYankPost', {
-	desc = 'Highlight when yanking (copying) text',
+vim.api.nvim_create_autocmd("TextYankPost", {
+	desc = "Highlight when yanking (copying) text",
 	callback = function()
 		vim.hl.on_yank()
 	end,
@@ -66,12 +66,11 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- See `:h nvim_create_user_command()` and `:h user-commands`
 
 -- Create a command `:GitBlameLine` that print the git blame for the current line
-vim.api.nvim_create_user_command('GitBlameLine', function()
-	local line_number = vim.fn.line('.') -- Get the current line number. See `:h line()`
+vim.api.nvim_create_user_command("GitBlameLine", function()
+	local line_number = vim.fn.line(".") -- Get the current line number. See `:h line()`
 	local filename = vim.api.nvim_buf_get_name(0)
-	print(vim.system({ 'git', 'blame', '-L', line_number .. ',+1', filename }):wait().stdout)
-end, { desc = 'Print the git blame for the current line' })
-
+	print(vim.system({ "git", "blame", "-L", line_number .. ",+1", filename }):wait().stdout)
+end, { desc = "Print the git blame for the current line" })
 
 -- PLUGINS
 --
@@ -79,62 +78,93 @@ end, { desc = 'Print the git blame for the current line' })
 
 -- Add the "nohlsearch" package to automatically disable search highlighting after
 -- 'updatetime' and when going to insert mode.
-vim.cmd('packadd! nohlsearch')
+vim.cmd("packadd! nohlsearch")
 
 -- Install third-party plugins via "vim.pack.add()".
 vim.pack.add({
+	-- Plenary
+	"https://github.com/nvim-lua/plenary.nvim",
 	-- Mason
-	'https://github.com/mason-org/mason.nvim',
-	'https://github.com/mason-org/mason-lspconfig.nvim',
+	"https://github.com/mason-org/mason.nvim",
+	"https://github.com/mason-org/mason-lspconfig.nvim",
 	-- Quickstart configs for LSP
-	'https://github.com/neovim/nvim-lspconfig',
+	"https://github.com/neovim/nvim-lspconfig",
 	-- Fuzzy picker
-	'https://github.com/ibhagwan/fzf-lua',
+	"https://github.com/ibhagwan/fzf-lua",
 	-- Enhanced quickfix/loclist
-	'https://github.com/stevearc/quicker.nvim',
+	"https://github.com/stevearc/quicker.nvim",
 	-- Git integration
-	'https://github.com/lewis6991/gitsigns.nvim',
+	"https://github.com/lewis6991/gitsigns.nvim",
 	-- Lazydev
-	'https://github.com/folke/lazydev.nvim',
+	"https://github.com/folke/lazydev.nvim",
 	-- Blink CMP
-	'https://github.com/rafamadriz/friendly-snippets',
+	"https://github.com/rafamadriz/friendly-snippets",
 	{
-		src = 'https://github.com/saghen/blink.cmp',
+		src = "https://github.com/saghen/blink.cmp",
 		version = "v1",
 	},
-	'https://github.com/tpope/vim-fugitive'
+	"https://github.com/tpope/vim-fugitive",
+	"https://github.com/stevearc/conform.nvim",
+	-- Harpoon
+	{
+		src = "https://github.com/ThePrimeagen/harpoon",
+		version = "harpoon2",
+	},
 })
 
-require('mason').setup {}
-local fzf = require('fzf-lua')
-require('quicker').setup {}
-require('gitsigns').setup {}
-require('lazydev').setup {
+require("mason").setup({})
+local fzf = require("fzf-lua")
+require("quicker").setup({})
+require("gitsigns").setup({})
+require("lazydev").setup({
 	library = {
 		-- See the configuration section for more details
 		-- Load luvit types when the `vim.uv` word is found
 		{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
 	},
-}
+})
 require("mason-lspconfig").setup({
 	ensure_installed = {
-		"lua_ls"
+		"lua_ls",
+
+		-- PYTHON
+		"basedpyright",
 	},
 })
-require('blink-cmp').setup {}
+require("blink-cmp").setup({})
+local conform = require("conform")
 
-vim.cmd.colorscheme('catppuccin')
+vim.cmd.colorscheme("catppuccin")
+
+-- CONFORM --
+conform.setup({
+	formatters_by_ft = {
+		lua = { "stylua" },
+		python = { "black" },
+	},
+})
+vim.keymap.set("n", "<leader>fm", conform.format)
 
 -- FUGITIVE --
-vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
+vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 
 -- FZF --
-fzf.setup { fzf_colors = true }
-vim.keymap.set('n', '<leader>ff', fzf.files)
-vim.keymap.set('n', '<leader>fc', function()
+fzf.setup({ fzf_colors = true })
+vim.keymap.set("n", "<leader>ff", function()
 	fzf.files({
-		cwd = vim.fn.stdpath('config')
+		file_ignore_patterns = {
+			".venv",
+			"node_modules",
+			".git",
+			"__pycache__",
+		},
 	})
 end)
-vim.keymap.set('n', '<leader>fg', fzf.grep)
-vim.keymap.set('n', '<leader>fh', fzf.helptags)
+vim.keymap.set("n", "<leader>fa", fzf.files)
+vim.keymap.set("n", "<leader>fc", function()
+	fzf.files({
+		cwd = vim.fn.stdpath("config"),
+	})
+end)
+vim.keymap.set("n", "<leader>fg", fzf.grep)
+vim.keymap.set("n", "<leader>fh", fzf.helptags)
