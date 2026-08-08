@@ -17,6 +17,8 @@ vim.o.number = true -- Show line numbers in a column.
 -- Affects the 'number' option above, see `:h number_relativenumber`.
 vim.o.relativenumber = true
 
+vim.o.winborder = 'rounded'
+
 -- Sync clipboard between OS and Neovim. Schedule the setting after `UIEnter` because it can
 -- increase startup-time. Remove this option if you want your OS clipboard to remain independent.
 -- See `:h 'clipboard'`
@@ -87,19 +89,23 @@ vim.pack.add({
 	'https://github.com/neovim/nvim-lspconfig',
 	-- Fuzzy picker
 	'https://github.com/ibhagwan/fzf-lua',
-	-- Autocompletion
-	'https://github.com/nvim-mini/mini.completion',
 	-- Enhanced quickfix/loclist
 	'https://github.com/stevearc/quicker.nvim',
 	-- Git integration
 	'https://github.com/lewis6991/gitsigns.nvim',
 	-- Lazydev
-	'https://github.com/folke/lazydev.nvim'
+	'https://github.com/folke/lazydev.nvim',
+	-- Blink CMP
+	'https://github.com/rafamadriz/friendly-snippets',
+	{
+		src = 'https://github.com/saghen/blink.cmp',
+		version = "v1",
+	},
+	'https://github.com/tpope/vim-fugitive'
 })
 
 require('mason').setup {}
 local fzf = require('fzf-lua')
-require('mini.completion').setup {}
 require('quicker').setup {}
 require('gitsigns').setup {}
 require('lazydev').setup {
@@ -114,8 +120,12 @@ require("mason-lspconfig").setup({
 		"lua_ls"
 	},
 })
+require('blink-cmp').setup {}
 
 vim.cmd.colorscheme('catppuccin')
+
+-- FUGITIVE --
+vim.keymap.set('n', '<leader>gs', vim.cmd.Git)
 
 -- FZF --
 fzf.setup { fzf_colors = true }
@@ -126,3 +136,4 @@ vim.keymap.set('n', '<leader>fc', function()
 	})
 end)
 vim.keymap.set('n', '<leader>fg', fzf.grep)
+vim.keymap.set('n', '<leader>fh', fzf.helptags)
