@@ -23,9 +23,9 @@ vim.o.winborder = "rounded"
 -- increase startup-time. Remove this option if you want your OS clipboard to remain independent.
 -- See `:h 'clipboard'`
 vim.api.nvim_create_autocmd("UIEnter", {
-	callback = function()
-		vim.o.clipboard = "unnamedplus"
-	end,
+    callback = function()
+        vim.o.clipboard = "unnamedplus"
+    end,
 })
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
@@ -56,10 +56,10 @@ vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 -- Highlight when yanking (copying) text.
 -- Try it with `yap` in normal mode. See `:h vim.hl.on_yank()`
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight when yanking (copying) text",
-	callback = function()
-		vim.hl.on_yank()
-	end,
+    desc = "Highlight when yanking (copying) text",
+    callback = function()
+        vim.hl.on_yank()
+    end,
 })
 
 -- USER COMMANDS: DEFINE CUSTOM COMMANDS
@@ -68,17 +68,17 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 
 -- Create a command `:GitBlameLine` that print the git blame for the current line
 vim.api.nvim_create_user_command("GitBlameLine", function()
-	local line_number = vim.fn.line(".") -- Get the current line number. See `:h line()`
-	local filename = vim.api.nvim_buf_get_name(0)
-	print(vim.system({ "git", "blame", "-L", line_number .. ",+1", filename }):wait().stdout)
+    local line_number = vim.fn.line(".") -- Get the current line number. See `:h line()`
+    local filename = vim.api.nvim_buf_get_name(0)
+    print(vim.system({ "git", "blame", "-L", line_number .. ",+1", filename }):wait().stdout)
 end, { desc = "Print the git blame for the current line" })
 
 -- Force Neovim to detect .h files as C files
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = "*.h",
-  callback = function()
-    vim.bo.filetype = "c"
-  end,
+    pattern = "*.h",
+    callback = function()
+        vim.bo.filetype = "c"
+    end,
 })
 
 -- PLUGINS
@@ -91,72 +91,72 @@ vim.cmd("packadd! nohlsearch")
 
 -- Install third-party plugins via "vim.pack.add()".
 vim.pack.add({
-	-- Markdown preview
-	"https://github.com/OXY2DEV/markview.nvim",
-	-- Plenary
-	"https://github.com/nvim-lua/plenary.nvim",
-	-- Mason
-	"https://github.com/mason-org/mason.nvim",
-	"https://github.com/mason-org/mason-lspconfig.nvim",
-	-- Quickstart configs for LSP
-	"https://github.com/neovim/nvim-lspconfig",
-	-- Fuzzy picker
-	"https://github.com/ibhagwan/fzf-lua",
-	-- Enhanced quickfix/loclist
-	"https://github.com/stevearc/quicker.nvim",
-	-- Git integration
-	"https://github.com/lewis6991/gitsigns.nvim",
-	-- Lazydev
-	"https://github.com/folke/lazydev.nvim",
-	-- Blink CMP
-	"https://github.com/rafamadriz/friendly-snippets",
-	{
-		src = "https://github.com/saghen/blink.cmp",
-		version = "v1",
-	},
-	"https://github.com/tpope/vim-fugitive",
-	"https://github.com/stevearc/conform.nvim",
-	-- Harpoon
-	{
-		src = "https://github.com/ThePrimeagen/harpoon",
-		version = "harpoon2",
-	},
+    -- Markdown preview
+    "https://github.com/OXY2DEV/markview.nvim",
+    -- Plenary
+    "https://github.com/nvim-lua/plenary.nvim",
+    -- Mason
+    "https://github.com/mason-org/mason.nvim",
+    "https://github.com/mason-org/mason-lspconfig.nvim",
+    -- Quickstart configs for LSP
+    "https://github.com/neovim/nvim-lspconfig",
+    -- Fuzzy picker
+    "https://github.com/ibhagwan/fzf-lua",
+    -- Enhanced quickfix/loclist
+    "https://github.com/stevearc/quicker.nvim",
+    -- Git integration
+    "https://github.com/lewis6991/gitsigns.nvim",
+    -- Lazydev
+    "https://github.com/folke/lazydev.nvim",
+    -- Blink CMP
+    "https://github.com/rafamadriz/friendly-snippets",
+    {
+        src = "https://github.com/saghen/blink.cmp",
+        version = "v1",
+    },
+    "https://github.com/tpope/vim-fugitive",
+    "https://github.com/stevearc/conform.nvim",
+    -- Harpoon
+    {
+        src = "https://github.com/ThePrimeagen/harpoon",
+        version = "harpoon2",
+    },
 
-	-- Rose pine
-	{
-		src = "https://github.com/rose-pine/neovim",
-		name = "rose-pine",
-	},
-	"https://github.com/lukas-reineke/indent-blankline.nvim",
-	"https://github.com/tpope/vim-sleuth",
+    -- Rose pine
+    {
+        src = "https://github.com/rose-pine/neovim",
+        name = "rose-pine",
+    },
+    "https://github.com/lukas-reineke/indent-blankline.nvim",
+    "https://github.com/tpope/vim-sleuth",
 })
 
-require('ibl').setup({})
+require("ibl").setup({})
 require("rose-pine").setup({})
 require("mason").setup({})
 local fzf = require("fzf-lua")
 require("quicker").setup({})
 require("gitsigns").setup({})
 require("lazydev").setup({
-	library = {
-		-- See the configuration section for more details
-		-- Load luvit types when the `vim.uv` word is found
-		{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-	},
+    library = {
+        -- See the configuration section for more details
+        -- Load luvit types when the `vim.uv` word is found
+        { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+    },
 })
 require("mason-lspconfig").setup({
-	ensure_installed = {
-		"lua_ls",
+    ensure_installed = {
+        "lua_ls",
 
-		-- PYTHON
-		"ruff",
-		"basedpyright",
-	},
-	automatic_enable = {
-		exclude = {
-			"ruff",
-		},
-	},
+        -- PYTHON
+        "ruff",
+        "basedpyright",
+    },
+    automatic_enable = {
+        exclude = {
+            "ruff",
+        },
+    },
 })
 require("blink-cmp").setup({})
 local conform = require("conform")
@@ -165,11 +165,17 @@ vim.cmd.colorscheme("rose-pine")
 
 -- CONFORM --
 conform.setup({
-	formatters_by_ft = {
-		lua = { "stylua" },
-		python = { "black" },
-		c = { "clang-format" }
-	},
+    formatters_by_ft = {
+        lua = { "stylua" },
+        python = { "black" },
+        c = { "clang-format" },
+    },
+    formatters = {
+        clang_format = {
+            -- Use prepend_args to safely inject options without erasing conform defaults
+            prepend_args = { "--style=file", "--fallback-style=LLVM" },
+        },
+    },
 })
 vim.keymap.set("n", "<leader>fm", conform.format)
 
@@ -180,9 +186,9 @@ vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 fzf.setup({ fzf_colors = true })
 vim.keymap.set("n", "<leader>ff", fzf.files)
 vim.keymap.set("n", "<leader>fc", function()
-	fzf.files({
-		cwd = vim.fn.stdpath("config"),
-	})
+    fzf.files({
+        cwd = vim.fn.stdpath("config"),
+    })
 end)
 vim.keymap.set("n", "<leader>fg", fzf.grep)
 vim.keymap.set("n", "<leader>fb", fzf.buffers)
@@ -192,36 +198,36 @@ vim.keymap.set("n", "<leader>fh", fzf.helptags)
 local harpoon = require("harpoon")
 
 harpoon:setup({
-	settings = {
-		save_on_toggle = true,
-	},
+    settings = {
+        save_on_toggle = true,
+    },
 })
 
 vim.keymap.set("n", "<leader>a", function()
-	harpoon:list():add()
+    harpoon:list():add()
 end)
 vim.keymap.set("n", "<C-e>", function()
-	harpoon.ui:toggle_quick_menu(harpoon:list())
+    harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
 
 vim.keymap.set("n", "<leader>1", function()
-	harpoon:list():select(1)
+    harpoon:list():select(1)
 end)
 vim.keymap.set("n", "<leader>2", function()
-	harpoon:list():select(2)
+    harpoon:list():select(2)
 end)
 vim.keymap.set("n", "<leader>3", function()
-	harpoon:list():select(3)
+    harpoon:list():select(3)
 end)
 vim.keymap.set("n", "<leader>4", function()
-	harpoon:list():select(4)
+    harpoon:list():select(4)
 end)
 
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<C-p>", function()
-	harpoon:list():prev()
+    harpoon:list():prev()
 end)
 
 vim.keymap.set("n", "<C-n>", function()
-	harpoon:list():next()
+    harpoon:list():next()
 end)
