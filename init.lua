@@ -46,6 +46,7 @@ vim.o.confirm = true
 
 -- Use <Esc> to exit terminal mode
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
+vim.keymap.set("n", "<C-c>", "<Esc>")
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 -- AUTOCOMMANDS (EVENT HANDLERS)
@@ -72,6 +73,14 @@ vim.api.nvim_create_user_command("GitBlameLine", function()
 	print(vim.system({ "git", "blame", "-L", line_number .. ",+1", filename }):wait().stdout)
 end, { desc = "Print the git blame for the current line" })
 
+-- Force Neovim to detect .h files as C files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = "*.h",
+  callback = function()
+    vim.bo.filetype = "c"
+  end,
+})
+
 -- PLUGINS
 --
 -- See `:h :packadd`, `:h vim.pack`
@@ -82,6 +91,8 @@ vim.cmd("packadd! nohlsearch")
 
 -- Install third-party plugins via "vim.pack.add()".
 vim.pack.add({
+	-- Markdown preview
+	"https://github.com/OXY2DEV/markview.nvim",
 	-- Plenary
 	"https://github.com/nvim-lua/plenary.nvim",
 	-- Mason
@@ -110,8 +121,18 @@ vim.pack.add({
 		src = "https://github.com/ThePrimeagen/harpoon",
 		version = "harpoon2",
 	},
+
+	-- Rose pine
+	{
+		src = "https://github.com/rose-pine/neovim",
+		name = "rose-pine",
+	},
+	"https://github.com/lukas-reineke/indent-blankline.nvim",
+	"https://github.com/tpope/vim-sleuth",
 })
 
+require('ibl').setup({})
+require("rose-pine").setup({})
 require("mason").setup({})
 local fzf = require("fzf-lua")
 require("quicker").setup({})
@@ -128,19 +149,26 @@ require("mason-lspconfig").setup({
 		"lua_ls",
 
 		-- PYTHON
+		"ruff",
 		"basedpyright",
+	},
+	automatic_enable = {
+		exclude = {
+			"ruff",
+		},
 	},
 })
 require("blink-cmp").setup({})
 local conform = require("conform")
 
-vim.cmd.colorscheme("catppuccin")
+vim.cmd.colorscheme("rose-pine")
 
 -- CONFORM --
 conform.setup({
 	formatters_by_ft = {
 		lua = { "stylua" },
 		python = { "black" },
+		c = { "clang-format" }
 	},
 })
 vim.keymap.set("n", "<leader>fm", conform.format)
@@ -150,21 +178,50 @@ vim.keymap.set("n", "<leader>gs", vim.cmd.Git)
 
 -- FZF --
 fzf.setup({ fzf_colors = true })
-vim.keymap.set("n", "<leader>ff", function()
-	fzf.files({
-		file_ignore_patterns = {
-			".venv",
-			"node_modules",
-			".git",
-			"__pycache__",
-		},
-	})
-end)
-vim.keymap.set("n", "<leader>fa", fzf.files)
+vim.keymap.set("n", "<leader>ff", fzf.files)
 vim.keymap.set("n", "<leader>fc", function()
 	fzf.files({
 		cwd = vim.fn.stdpath("config"),
 	})
 end)
 vim.keymap.set("n", "<leader>fg", fzf.grep)
+vim.keymap.set("n", "<leader>fb", fzf.buffers)
 vim.keymap.set("n", "<leader>fh", fzf.helptags)
+
+-- HARPOON --
+local harpoon = require("harpoon")
+
+harpoon:setup({
+	settings = {
+		save_on_toggle = true,
+	},
+})
+
+vim.keymap.set("n", "<leader>a", function()
+	harpoon:list():add()
+end)
+vim.keymap.set("n", "<C-e>", function()
+	harpoon.ui:toggle_quick_menu(harpoon:list())
+end)
+
+vim.keymap.set("n", "<leader>1", function()
+	harpoon:list():select(1)
+end)
+vim.keymap.set("n", "<leader>2", function()
+	harpoon:list():select(2)
+end)
+vim.keymap.set("n", "<leader>3", function()
+	harpoon:list():select(3)
+end)
+vim.keymap.set("n", "<leader>4", function()
+	harpoon:list():select(4)
+end)
+
+-- Toggle previous & next buffers stored within Harpoon list
+vim.keymap.set("n", "<C-p>", function()
+	harpoon:list():prev()
+end)
+
+vim.keymap.set("n", "<C-n>", function()
+	harpoon:list():next()
+end)
