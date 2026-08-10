@@ -128,17 +128,14 @@ vim.pack.add({
         src = "https://github.com/rose-pine/neovim",
         name = "rose-pine",
     },
-    "https://github.com/lukas-reineke/indent-blankline.nvim",
+    "https://github.com/nvim-mini/mini.indentscope",
     "https://github.com/tpope/vim-sleuth",
     "https://github.com/nvim-treesitter/nvim-treesitter",
+    "https://github.com/folke/tokyonight.nvim",
 })
 
 local nvim_ts = require("nvim-treesitter")
-require("ibl").setup({
-    scope = {
-        enabled = true,
-    },
-})
+require("mini.indentscope").setup({})
 require("rose-pine").setup({
     styles = {
         italic = false,
@@ -173,7 +170,7 @@ require("blink-cmp").setup({})
 local conform = require("conform")
 
 -- COLORSCHEME --
-vim.cmd.colorscheme("rose-pine")
+vim.cmd.colorscheme("tokyonight")
 
 -- CONFORM --
 conform.setup({
