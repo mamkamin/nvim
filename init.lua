@@ -18,6 +18,7 @@ vim.o.number = true -- Show line numbers in a column.
 vim.o.relativenumber = true
 
 vim.o.winborder = "rounded"
+vim.o.colorcolumn = "100"
 
 -- Sync clipboard between OS and Neovim. Schedule the setting after `UIEnter` because it can
 -- increase startup-time. Remove this option if you want your OS clipboard to remain independent.
@@ -129,10 +130,20 @@ vim.pack.add({
     },
     "https://github.com/lukas-reineke/indent-blankline.nvim",
     "https://github.com/tpope/vim-sleuth",
+    "https://github.com/nvim-treesitter/nvim-treesitter",
 })
 
-require("ibl").setup({})
-require("rose-pine").setup({})
+local nvim_ts = require("nvim-treesitter")
+require("ibl").setup({
+    scope = {
+        enabled = true,
+    },
+})
+require("rose-pine").setup({
+    styles = {
+        italic = false,
+    },
+})
 require("mason").setup({})
 local fzf = require("fzf-lua")
 require("quicker").setup({})
@@ -161,6 +172,7 @@ require("mason-lspconfig").setup({
 require("blink-cmp").setup({})
 local conform = require("conform")
 
+-- COLORSCHEME --
 vim.cmd.colorscheme("rose-pine")
 
 -- CONFORM --
@@ -231,3 +243,13 @@ end)
 vim.keymap.set("n", "<C-n>", function()
     harpoon:list():next()
 end)
+
+-- TREESITTER --
+nvim_ts.install({ "c", "lua", "python" })
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = { "lua", "python", "c" },
+    callback = function()
+        vim.treesitter.start()
+    end,
+})
