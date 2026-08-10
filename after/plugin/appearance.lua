@@ -2,7 +2,13 @@ require("mini.indentscope").setup({})
 require("rose-pine").setup({
     styles = {
         italic = false,
+        transparency = true
     },
 })
 
-vim.cmd.colorscheme("tokyonight")
+---@diagnostic disable-next-line: missing-fields
+require("tokyonight").setup({
+    transparent = true,
+})
+
+vim.cmd.colorscheme("rose-pine")

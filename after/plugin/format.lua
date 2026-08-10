@@ -5,6 +5,10 @@ conform.setup({
         lua = { "stylua" },
         python = { "black" },
         c = { "clang-format" },
+        javascript = { "prettier" },
+        typescript = { "prettier" },
+        javascriptreact = { "prettier" },
+        typescriptreact = { "prettier" },
     },
     formatters = {
         clang_format = {
