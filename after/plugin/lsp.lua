@@ -7,7 +7,7 @@ require("lazydev").setup({
 require("mason-lspconfig").setup({
     ensure_installed = {
         "lua_ls",
-        "basedpyright",
+        -- "basedpyright",
         "ts_ls",
         "tailwindcss",
         "emmet_language_server",

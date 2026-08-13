@@ -2,7 +2,7 @@ require("mini.indentscope").setup({})
 require("rose-pine").setup({
     styles = {
         italic = false,
-        transparency = true
+        transparency = false
     },
 })
 
