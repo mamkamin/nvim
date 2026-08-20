@@ -3,3 +3,7 @@ vim.api.nvim_create_user_command("GitBlameLine", function()
     local filename = vim.api.nvim_buf_get_name(0)
     print(vim.system({ "git", "blame", "-L", line_number .. ",+1", filename }):wait().stdout)
 end, { desc = "Print the git blame for the current line" })
+
+vim.api.nvim_create_user_command("LspInfo", function()
+    vim.cmd("checkhealth vim.lsp")
+end, { desc = "Checkhealth Vim LSP" })

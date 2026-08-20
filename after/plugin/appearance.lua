@@ -11,4 +11,4 @@ require("tokyonight").setup({
     transparent = true,
 })
 
-vim.cmd.colorscheme("rose-pine")
+vim.cmd.colorscheme("tokyonight")
