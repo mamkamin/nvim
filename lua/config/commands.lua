@@ -7,3 +7,7 @@ end, { desc = "Print the git blame for the current line" })
 vim.api.nvim_create_user_command("LspInfo", function()
     vim.cmd("checkhealth vim.lsp")
 end, { desc = "Checkhealth Vim LSP" })
+
+vim.api.nvim_create_user_command("PackUpdate", function()
+    vim.pack.update()
+end, { desc = "Update plugin using Pack" })

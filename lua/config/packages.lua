@@ -1,7 +1,6 @@
 vim.cmd("packadd! nohlsearch")
 
 vim.pack.add({
-    "https://github.com/OXY2DEV/markview.nvim",
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/mason-org/mason.nvim",
     "https://github.com/mason-org/mason-lspconfig.nvim",
