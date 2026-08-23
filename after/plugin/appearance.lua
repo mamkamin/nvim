@@ -8,7 +8,7 @@ require("rose-pine").setup({
 
 ---@diagnostic disable-next-line: missing-fields
 require("tokyonight").setup({
-    transparent = true,
+    transparent = false,
 })
 
 vim.cmd.colorscheme("tokyonight")
