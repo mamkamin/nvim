@@ -11,4 +11,8 @@ require("tokyonight").setup({
     transparent = false,
 })
 
-vim.cmd.colorscheme("tokyonight")
+require("vague").setup({
+    italic = false,
+})
+
+vim.cmd.colorscheme("catppuccin")

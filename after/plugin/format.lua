@@ -28,4 +28,10 @@ conform.setup({
     },
 })
 
-vim.keymap.set("n", "<leader>fm", conform.format)
+vim.keymap.set("n", "<leader>fm", function()
+    conform.format({
+        lsp_fallback = true,
+        async = false,
+        timeout_ms = 2000, -- 👈 Gives Prettier up to 2 seconds to finish
+    })
+end)

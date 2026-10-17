@@ -21,14 +21,18 @@ vim.pack.add({
         src = "https://github.com/ThePrimeagen/harpoon",
         version = "harpoon2",
     },
+    "https://github.com/nvim-mini/mini.indentscope",
+    "https://github.com/tpope/vim-sleuth",
+    "https://github.com/nvim-treesitter/nvim-treesitter",
+    "https://github.com/nvim-treesitter/nvim-treesitter-context",
+
+    -- COLORSCHEME
     {
         src = "https://github.com/rose-pine/neovim",
         name = "rose-pine",
     },
-    "https://github.com/nvim-mini/mini.indentscope",
-    "https://github.com/tpope/vim-sleuth",
-    "https://github.com/nvim-treesitter/nvim-treesitter",
     "https://github.com/folke/tokyonight.nvim",
+    "https://github.com/vague-theme/vague.nvim",
 
     -- JAVA STUFF
     {
