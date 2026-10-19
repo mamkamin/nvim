@@ -19,7 +19,7 @@ vim.lsp.config("emmet_language_server", {
 require("mason-lspconfig").setup({
     ensure_installed = {
         "lua_ls",
-        "basedpyright",
+        -- "basedpyright",
         "ts_ls",
         "tailwindcss",
         "cssls",

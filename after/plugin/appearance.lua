@@ -15,4 +15,5 @@ require("vague").setup({
     italic = false,
 })
 
-vim.cmd.colorscheme("catppuccin")
+vim.g.nord_italic = false
+vim.cmd.colorscheme("nord")

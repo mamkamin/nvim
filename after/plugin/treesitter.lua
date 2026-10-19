@@ -29,3 +29,19 @@ require("treesitter-context").setup({
     max_lines = 3,
     multiline_threshold = 1,
 })
+
+-- Nord-style Treesitter Context
+vim.api.nvim_set_hl(0, "TreesitterContext", {
+    bg = "#3b4252",
+    fg = "#eceff4",
+})
+
+vim.api.nvim_set_hl(0, "TreesitterContextLineNumber", {
+    bg = "#3b4252",
+    fg = "#88c0d0",
+})
+
+vim.api.nvim_set_hl(0, "TreesitterContextSeparator", {
+    bg = "NONE",
+    fg = "#4c566a",
+})

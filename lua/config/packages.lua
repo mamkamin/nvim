@@ -31,8 +31,13 @@ vim.pack.add({
         src = "https://github.com/rose-pine/neovim",
         name = "rose-pine",
     },
+    "https://github.com/shaunsingh/nord.nvim",
     "https://github.com/folke/tokyonight.nvim",
     "https://github.com/vague-theme/vague.nvim",
+
+    -- STATUS LINE
+    'https://github.com/nvim-tree/nvim-web-devicons',
+    'https://github.com/nvim-lualine/lualine.nvim',
 
     -- JAVA STUFF
     {
