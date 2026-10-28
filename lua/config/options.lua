@@ -13,6 +13,8 @@ vim.o.signcolumn = "yes"
 vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 
+vim.env.CC = "cc"
+
 -- Defer clipboard setup to avoid adding to startup time.
 vim.api.nvim_create_autocmd("UIEnter", {
     callback = function()
