@@ -13,7 +13,7 @@ vim.pack.add({
     "https://github.com/rafamadriz/friendly-snippets",
     {
         src = "https://github.com/saghen/blink.cmp",
-        version = "v1",
+        version = vim.version.range("1.*"),
     },
     "https://github.com/tpope/vim-fugitive",
     "https://github.com/stevearc/conform.nvim",
@@ -34,6 +34,8 @@ vim.pack.add({
     "https://github.com/shaunsingh/nord.nvim",
     "https://github.com/folke/tokyonight.nvim",
     "https://github.com/vague-theme/vague.nvim",
+    "https://github.com/tjdevries/colorbuddy.nvim",
+    "https://github.com/mamkamin/sitrusbuddy.nvim",
 
     -- STATUS LINE
     'https://github.com/nvim-tree/nvim-web-devicons',

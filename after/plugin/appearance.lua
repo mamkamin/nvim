@@ -16,4 +16,4 @@ require("vague").setup({
 })
 
 vim.g.nord_italic = false
-vim.cmd.colorscheme("nord")
+vim.cmd.colorscheme("gruvbuddy")
